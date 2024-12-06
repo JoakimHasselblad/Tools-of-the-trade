@@ -15,3 +15,6 @@ Some of these documents and files were created based on the works of others. In 
 In other case, when I have created new tools that are in whole or in part based on ideas laid forward by other people in books or the like, I will mention that. (If you for some reason object to my use of what you claim to be your original work, please let me know.)
 
 If I am certain that I can claim to be the licensor, I might find it suitable to grant rights under a certain license. In those cases, it is also important that you read and understand the conditions that apply.
+
+## Warranty and liablity
+ALL WORK HERE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE WORK OR THE USE OR OTHER DEALINGS IN THE WORK.
