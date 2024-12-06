@@ -10,7 +10,7 @@ In this repository, I will collect different material suitable for management co
 
 ## Acknowledgments
 
-Some of these documents and files were created based on the works of others. In some such cases, use of the material might be subject to licensing of some kind. It is important that you read and understand the conditions in those cases.
+Documents and files here might have been based on the works of others. In those cases, use of the material might be subject to licensing of some kind. If that is, it is important that you read and understand the conditions that apply.
 
 In other case, when I have created new tools that are in whole or in part based on ideas laid forward by other people in books or the like, I will mention that. (If you for some reason object to my use of what you claim to be your original work, please let me know.)
 
