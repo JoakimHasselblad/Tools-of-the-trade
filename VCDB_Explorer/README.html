@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VCDB Interactive Explorer - README</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #fafafa;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #7f8c8d;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: "Consolas", "Monaco", monospace;
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #ecf0f1;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        ul {
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        a {
+            color: #3498db;
+        }
+        a:hover {
+            color: #2980b9;
+        }
+        .step {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .step-number {
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: inline-block;
+            text-align: center;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>VCDB Interactive Explorer</h1>
+
+<p>An interactive web application for exploring security incident data from the VERIS Community Database (VCDB).</p>
+
+<h2>What This Tool Does</h2>
+
+<p>VCDB Explorer allows you to:</p>
+<ul>
+    <li>Filter incidents by country/region, industry sector, attack type, and threat actor</li>
+    <li>View breach statistics and breach rates for your selected criteria</li>
+    <li>Explore year-over-year trends in security incidents</li>
+    <li>Identify which attack vectors and threat actors are most common</li>
+    <li>See which data types are most frequently compromised</li>
+</ul>
+
+<h2>Requirements</h2>
+
+<ul>
+    <li><strong>R</strong> (version 4.0 or higher)</li>
+    <li>Required R packages: <code>shiny</code>, <code>tidyverse</code>, <code>DT</code></li>
+</ul>
+
+<h2>Installing R</h2>
+
+<h3>Windows</h3>
+
+<div class="step">
+    <span class="step-number">1</span> Go to <a href="https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>
+</div>
+<div class="step">
+    <span class="step-number">2</span> Click <strong>"Download R for Windows"</strong>
+</div>
+<div class="step">
+    <span class="step-number">3</span> Click <strong>"base"</strong>
+</div>
+<div class="step">
+    <span class="step-number">4</span> Click <strong>"Download R-4.x.x for Windows"</strong> (latest version)
+</div>
+<div class="step">
+    <span class="step-number">5</span> Run the downloaded installer
+</div>
+<div class="step">
+    <span class="step-number">6</span> Accept the default installation options
+</div>
+
+<h3>Mac</h3>
+
+<div class="step">
+    <span class="step-number">1</span> Go to <a href="https://cran.r-project.org/" target="_blank">https://cran.r-project.org/</a>
+</div>
+<div class="step">
+    <span class="step-number">2</span> Click <strong>"Download R for macOS"</strong>
+</div>
+<div class="step">
+    <span class="step-number">3</span> Download the appropriate .pkg file for your Mac
+</div>
+<div class="step">
+    <span class="step-number">4</span> Run the installer
+</div>
+
+<h3>Optional: Install RStudio (Recommended)</h3>
+
+<p>RStudio provides a more user-friendly interface for R:</p>
+<ol>
+    <li>Go to <a href="https://posit.co/download/rstudio-desktop/" target="_blank">https://posit.co/download/rstudio-desktop/</a></li>
+    <li>Download RStudio Desktop (Free)</li>
+    <li>Install it</li>
+</ol>
+
+<h2>Installing Required Packages</h2>
+
+<p>Open R or RStudio and run the following command:</p>
+
+<pre><code>install.packages(c("shiny", "tidyverse", "DT"))</code></pre>
+
+<p>This only needs to be done once. The installation may take a few minutes.</p>
+
+<h2>Running the Application</h2>
+
+<h3>Option 1: Using RStudio (Easiest)</h3>
+
+<ol>
+    <li>Open RStudio</li>
+    <li>Go to <strong>File &gt; Open File</strong></li>
+    <li>Navigate to the <code>VCDB_Explorer</code> folder and open <code>app.R</code></li>
+    <li>Click the <strong>"Run App"</strong> button in the top-right corner of the editor</li>
+</ol>
+
+<h3>Option 2: Using R Console</h3>
+
+<ol>
+    <li>Open R</li>
+    <li>Set the working directory to the VCDB_Explorer folder:
+        <pre><code>setwd("C:/path/to/VCDB_Explorer")</code></pre>
+    </li>
+    <li>Run the application:
+        <pre><code>shiny::runApp()</code></pre>
+    </li>
+</ol>
+
+<h3>Option 3: One-Line Command</h3>
+
+<p>In R or RStudio console:</p>
+<pre><code>shiny::runApp("C:/path/to/VCDB_Explorer")</code></pre>
+
+<p>The application will open in your default web browser.</p>
+
+<h2>Using the Interface</h2>
+
+<h3>Filters (Left Sidebar)</h3>
+
+<table>
+    <tr>
+        <th>Filter</th>
+        <th>Options</th>
+    </tr>
+    <tr>
+        <td><strong>Country/Region</strong></td>
+        <td>All Countries, United States, Europe, Asia-Pacific, Other Regions</td>
+    </tr>
+    <tr>
+        <td><strong>Industry Sector</strong></td>
+        <td>Healthcare, Government, Finance, Retail, etc. (NAICS codes)</td>
+    </tr>
+    <tr>
+        <td><strong>Attack Vectors</strong></td>
+        <td>Hacking, Malware, Social Engineering, Misuse, Physical, Error</td>
+    </tr>
+    <tr>
+        <td><strong>Threat Actors</strong></td>
+        <td>External, Internal, Partner</td>
+    </tr>
+    <tr>
+        <td><strong>Year Range</strong></td>
+        <td>2005-2021 (slider)</td>
+    </tr>
+</table>
+
+<h3>Dashboard (Main Panel)</h3>
+
+<ul>
+    <li><strong>Summary Statistics:</strong> Organization count, incident count, breach rate</li>
+    <li><strong>Incidents by Year:</strong> Stacked bar chart showing breaches vs. non-breach incidents</li>
+    <li><strong>Attack Types:</strong> Horizontal bar chart of attack vector frequency</li>
+    <li><strong>Threat Actors:</strong> Horizontal bar chart of actor type frequency</li>
+    <li><strong>Data Types Compromised:</strong> Table of most frequently compromised data types</li>
+</ul>
+
+<h2>Understanding the Data</h2>
+
+<h3>Data Source</h3>
+
+<p>VCDB (VERIS Community Database) is a collection of publicly reported security incidents maintained by the security community. Data is coded using the VERIS framework (Vocabulary for Event Recording and Incident Sharing).</p>
+
+<h3>Important Limitations</h3>
+
+<div class="warning">
+    <strong>US-Centric:</strong> Approximately 70-80% of incidents are from the United States due to US breach notification laws, English-language sources, and contributor demographics.
+</div>
+
+<div class="warning">
+    <strong>Public Incidents Only:</strong> VCDB only includes publicly reported incidents. Many incidents go unreported, so actual incident rates are higher.
+</div>
+
+<div class="warning">
+    <strong>Reporting Lag:</strong> Recent years (2022+) have incomplete data. It takes months or years for incidents to be publicly disclosed and added to VCDB.
+</div>
+
+<h3>Interpreting Results</h3>
+
+<div class="info">
+    <strong>DO:</strong> Use this data for <em>relative comparisons</em> (e.g., "Hacking is more common than Physical in Healthcare")
+</div>
+
+<div class="warning">
+    <strong>DON'T:</strong> Use for <em>absolute risk quantification</em> (e.g., "My organization has X% chance of breach")
+</div>
+
+<p>Cross-reference with other sources like the Verizon DBIR for validation.</p>
+
+<h2>Files Included</h2>
+
+<table>
+    <tr>
+        <th>File</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>app.R</code></td>
+        <td>The Shiny application code</td>
+    </tr>
+    <tr>
+        <td><code>vcdb.dat</code></td>
+        <td>VCDB incident database</td>
+    </tr>
+    <tr>
+        <td><code>README.txt</code></td>
+        <td>Documentation (plain text)</td>
+    </tr>
+    <tr>
+        <td><code>README.md</code></td>
+        <td>Documentation (Markdown)</td>
+    </tr>
+    <tr>
+        <td><code>README.html</code></td>
+        <td>Documentation (this file - open in browser)</td>
+    </tr>
+</table>
+
+<h2>More Information</h2>
+
+<ul>
+    <li><strong>VCDB Project:</strong> <a href="https://github.com/vz-risk/VCDB" target="_blank">https://github.com/vz-risk/VCDB</a></li>
+    <li><strong>VERIS Framework:</strong> <a href="http://veriscommunity.net/" target="_blank">http://veriscommunity.net/</a></li>
+    <li><strong>Verizon DBIR:</strong> <a href="https://www.verizon.com/business/resources/reports/dbir/" target="_blank">https://www.verizon.com/business/resources/reports/dbir/</a></li>
+</ul>
+
+<h2>Troubleshooting</h2>
+
+<table>
+    <tr>
+        <th>Problem</th>
+        <th>Solution</th>
+    </tr>
+    <tr>
+        <td>"Package not found" error</td>
+        <td>Run: <code>install.packages("package_name")</code> for the missing package</td>
+    </tr>
+    <tr>
+        <td>App won't start</td>
+        <td>Ensure working directory contains both <code>app.R</code> and <code>vcdb.dat</code>, all packages are installed, and you're using R 4.0+</td>
+    </tr>
+    <tr>
+        <td>Charts are empty</td>
+        <td>Your filter combination may have returned zero results. Try broadening your filters.</td>
+    </tr>
+    <tr>
+        <td>Browser doesn't open</td>
+        <td>Copy the URL from the R console (usually http://127.0.0.1:XXXX) and paste it in your browser manually</td>
+    </tr>
+</table>
+
+</body>
+</html>
