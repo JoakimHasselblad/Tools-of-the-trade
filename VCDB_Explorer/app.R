@@ -118,19 +118,24 @@ ui <- fluidPage(
 
       hr(),
 
-      # Attack vectors (action types)
+      # Attack vectors (action types) - alphabetically sorted
       checkboxGroupInput(
         "actions",
         "Attack Vectors:",
         choices = c(
+          "Error" = "error",
           "Hacking" = "hacking",
           "Malware" = "malware",
-          "Social Engineering" = "social",
           "Misuse" = "misuse",
           "Physical" = "physical",
-          "Error" = "error"
+          "Social Engineering" = "social"
         ),
-        selected = c("hacking", "malware", "social", "misuse", "physical", "error")
+        selected = c("error", "hacking", "malware", "misuse", "physical", "social")
+      ),
+      # Select all / Deselect all for attack vectors
+      fluidRow(
+        column(6, actionLink("select_all_actions", "Select all")),
+        column(6, actionLink("deselect_all_actions", "Deselect all"))
       ),
 
       hr(),
@@ -145,6 +150,11 @@ ui <- fluidPage(
           "Partner" = "partner"
         ),
         selected = c("external", "internal", "partner")
+      ),
+      # Select all / Deselect all for threat actors
+      fluidRow(
+        column(6, actionLink("select_all_actors", "Select all")),
+        column(6, actionLink("deselect_all_actors", "Deselect all"))
       ),
 
       hr(),
@@ -237,6 +247,26 @@ ui <- fluidPage(
 # ============================================================================
 
 server <- function(input, output, session) {
+
+  # Select all / Deselect all for Attack Vectors
+  observeEvent(input$select_all_actions, {
+    updateCheckboxGroupInput(session, "actions",
+      selected = c("error", "hacking", "malware", "misuse", "physical", "social")
+    )
+  })
+  observeEvent(input$deselect_all_actions, {
+    updateCheckboxGroupInput(session, "actions", selected = character(0))
+  })
+
+  # Select all / Deselect all for Threat Actors
+  observeEvent(input$select_all_actors, {
+    updateCheckboxGroupInput(session, "actors",
+      selected = c("external", "internal", "partner")
+    )
+  })
+  observeEvent(input$deselect_all_actors, {
+    updateCheckboxGroupInput(session, "actors", selected = character(0))
+  })
 
   # Reactive filtered dataset
   filtered_data <- reactive({
@@ -336,6 +366,9 @@ server <- function(input, output, session) {
       "<strong>", format(n_incidents, big.mark = ","), " incidents</strong><br>",
       "<strong>", format(n_breaches, big.mark = ","), " confirmed breaches</strong> (",
       breach_rate, "% breach rate)",
+      "</div>",
+      "<div style='font-size: 12px; font-style: italic; color: #666; margin-top: 8px;'>",
+      "Incidents may involve multiple attack types or actors. Totals reflect incidents matching any selected filter.",
       "</div>"
     ))
   })
@@ -369,27 +402,47 @@ server <- function(input, output, session) {
       )
   })
 
-  # Attack types chart
+  # Attack types chart - only show selected action types
   output$action_chart <- renderPlot({
     data <- filtered_data()
 
-    if (nrow(data) == 0) {
+    if (nrow(data) == 0 || length(input$actions) == 0) {
       return(NULL)
     }
 
+    # Mapping from checkbox values to display names
+    action_mapping <- c(
+      "hacking" = "Hacking",
+      "malware" = "Malware",
+      "social" = "Social",
+      "misuse" = "Misuse",
+      "physical" = "Physical",
+      "error" = "Error"
+    )
+
+    # Only count selected action types
     action_counts <- data.frame(
-      Action = c("Hacking", "Malware", "Social", "Misuse", "Physical", "Error"),
-      Count = c(
-        count_any_true(data, "action.hacking"),
-        count_any_true(data, "action.malware"),
-        count_any_true(data, "action.social"),
-        count_any_true(data, "action.misuse"),
-        count_any_true(data, "action.physical"),
-        count_any_true(data, "action.error")
-      )
-    ) %>%
+      Action = character(),
+      Count = numeric(),
+      stringsAsFactors = FALSE
+    )
+
+    for (action in input$actions) {
+      count <- count_any_true(data, paste0("action.", action))
+      action_counts <- rbind(action_counts, data.frame(
+        Action = action_mapping[action],
+        Count = count,
+        stringsAsFactors = FALSE
+      ))
+    }
+
+    action_counts <- action_counts %>%
       filter(Count > 0) %>%
       arrange(desc(Count))
+
+    if (nrow(action_counts) == 0) {
+      return(NULL)
+    }
 
     ggplot(action_counts, aes(x = reorder(Action, Count), y = Count)) +
       geom_bar(stat = "identity", fill = "#2ca02c") +
@@ -399,24 +452,44 @@ server <- function(input, output, session) {
       theme(panel.grid.minor = element_blank())
   })
 
-  # Actor types chart
+  # Actor types chart - only show selected actor types
   output$actor_chart <- renderPlot({
     data <- filtered_data()
 
-    if (nrow(data) == 0) {
+    if (nrow(data) == 0 || length(input$actors) == 0) {
       return(NULL)
     }
 
+    # Mapping from checkbox values to display names
+    actor_mapping <- c(
+      "external" = "External",
+      "internal" = "Internal",
+      "partner" = "Partner"
+    )
+
+    # Only count selected actor types
     actor_counts <- data.frame(
-      Actor = c("External", "Internal", "Partner"),
-      Count = c(
-        count_any_true(data, "actor.external"),
-        count_any_true(data, "actor.internal"),
-        count_any_true(data, "actor.partner")
-      )
-    ) %>%
+      Actor = character(),
+      Count = numeric(),
+      stringsAsFactors = FALSE
+    )
+
+    for (actor in input$actors) {
+      count <- count_any_true(data, paste0("actor.", actor))
+      actor_counts <- rbind(actor_counts, data.frame(
+        Actor = actor_mapping[actor],
+        Count = count,
+        stringsAsFactors = FALSE
+      ))
+    }
+
+    actor_counts <- actor_counts %>%
       filter(Count > 0) %>%
       arrange(desc(Count))
+
+    if (nrow(actor_counts) == 0) {
+      return(NULL)
+    }
 
     ggplot(actor_counts, aes(x = reorder(Actor, Count), y = Count)) +
       geom_bar(stat = "identity", fill = "#9467bd") +
