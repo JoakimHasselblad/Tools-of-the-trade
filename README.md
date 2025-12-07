@@ -6,13 +6,13 @@ Because sharing is fun!
 
 ## Background
 
-In this repository, I will collect different material suitable for management consulting and the like. It's material that I have created primarily for my own use, but that I think might be interesting or useful to others.
+In this repository, I will collect different material suitable for management consulting and the like. It's material that I have created primarily for my own use, but which I also think might be interesting or useful to others.
 
 ## Acknowledgments
 
-Documents and files here might have been based on the works of others. In those cases, use of the material might be subject to licensing of some kind. If that is, it is important that you read and understand the conditions that apply.
+Documents and files here might have been based on tools or applications that others have created. In those cases, use of the material might be subject to licensing of some kind. If that is the case, it is important that you read and understand the conditions that apply.
 
-In other case, when I have created new tools that are in whole or in part based on ideas put forward by other people in books or the like, I will mention that. (If you for some reason object to my use of what you claim to be your original work, please let me know.)
+In other cases, when I have created new tools that are in whole or in part based on ideas put forward by other people in books or the like, I will mention that. (If you for some reason object to my use of what you claim to be your original work, please let me know.)
 
 If I am certain that I can claim to be the licensor, I might find it suitable to grant rights under a certain license. In those cases, it is also important that you read and understand the conditions that apply.
 
