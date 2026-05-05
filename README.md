@@ -6,7 +6,7 @@ Because sharing is fun!
 
 ## Background
 
-In this repository, I will collect different material suitable for management consulting and the like. It's material that I have created primarily for my own use, but which I also think might be interesting or useful to others. However, because of the context in which it was created, most of the material is in Swedish.
+In this repository, I will collect different material suitable for management consulting and the like. It's material that I have created primarily for my own use, but which I also think might be interesting or useful to others. However, because of the context in which it was created, most of the files are in Swedish.
 
 ## Acknowledgments
 
